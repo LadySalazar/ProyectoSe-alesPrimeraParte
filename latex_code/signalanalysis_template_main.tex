@@ -1,0 +1,327 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%	Name: "Signal analysis template"
+%%	File name: signalanalysis_template_main
+%%	Version: 1.5
+%%
+%%	Compiler: XeLaTeX
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[conference,compsoc,onecolumn]{IEEEtran}
+
+% *** LANGUAGE UTILITY PACKAGES ***
+\usepackage[utf8]{inputenc} % Required for including letters with accents
+\usepackage[spanish]{babel}
+\usepackage{hyperref}
+\usepackage{graphicx}
+% *** USED PACKAGES ***
+\include{usedpackages}
+
+% *** CARPETA DONDE SE GUARDARAN LAS IMAGENES ***
+\graphicspath{{figures/}}
+
+% *** NUEVOS COMANDOS Y CONFIGURACIONES VARIAS ***
+\interdisplaylinepenalty=2500
+\newcommand{\Lpagenumber}{\ifdim\textwidth=\linewidth\else\bgroup
+	\dimendef\margin=0
+	\ifodd\value{page}\margin=\oddsidemargin
+	\else\margin=\evensidemargin
+	\fi
+	\raisebox{\dimexpr -\topmargin-\headheight-\headsep-0.5\linewidth}[0pt][0pt]{%
+		\rlap{\hspace{\dimexpr \margin+\textheight+\footskip}%
+			\llap{\rotatebox{90}{\thepage}}}}%
+	\egroup\fi}
+
+\AddEverypageHook{\Lpagenumber}%
+
+\newcommand{\newtxt}[1]{\textcolor{black}{#1}}
+\renewcommand\IEEEkeywordsname{Palabras cláve:}
+\newcommand{\mx}[1]{\mathbf{\bm{#1}}} % Matrix command
+\newcommand{\vc}[1]{\mathbf{\bm{#1}}} % Vector command
+
+%% Separación de palabras
+\hyphenation{op-tical net-works semi-conduc-tor HHMMSS}
+
+
+\begin{document}
+
+% *** TITLES AND NAMES ***
+% title of the document
+\title{Proyecto de aula: Plataforma de seguimiento de datos COVID-19 para Colombia}
+% author names and affiliations
+\makeatletter
+\newcommand{\linebreakand}{%
+    \end{@IEEEauthorhaling}
+    \hfill\mbox{}\par
+    \mbox{}\hfill\begin{@IEEEauthorhalign}
+}
+\makeatother
+%%%%
+\author{\IEEEauthorblockN{Lady~Geraldine~Salazar~Bayona}
+\IEEEauthorblockA{Escuela de Ciencias Exactas\\
+Universidad Sergio Arboleda-Bogotá, Colombia\\
+lady.salazar01@correo.usa.edu.co}
+\and
+\IEEEauthorblockN{Juan~Pablo~Mora~Aragón}
+\IEEEauthorblockA{Escuela de Ciencias Exactas\\
+Universidad Sergio Arboleda-Bogotá, Colombia\\
+juan.mora03@correo.usa.edu.co}
+\linebreakand
+\IEEEauthorblockN{Jessica~Valentina~Parrado~Alfonso}
+\IEEEauthorblockA{Escuela de Ciencias Exactas\\
+Universidad Sergio Arboleda-Bogotá, Colombia\\
+jessica.parrado01@correo.usa.edu.co}}
+
+% *** MAKE TITLE ***
+\maketitle
+\IEEEoverridecommandlockouts
+\IEEEpeerreviewmaketitle
+
+\begin{abstract}
+En el presente laboratorio se aplicarán los procesos necesarios para extraer información de páginas web con datos actualizados sobre la pandemia actual que ha cambiado al mundo, esto se hará usando el lenguaje de programación interpretado Python el cual permite de manera sencilla la extracción, interpretación y la realización de las gráficas. Es de destacar que para el proceso de adquirir la información se hace necesario una amplia investigación para poder hallar la base de datos adecuada. Todo lo anterior se elaboró con el objetivo de informar mediante graficas de dos dimensiones la situación actual por la que pasa la humanidad en esta pandemia. Los resultados y el proceso se podrán visualizar a lo largo del proyecto detalladamente.
+\end{abstract}
+
+
+\begin{IEEEkeywords}
+    \LaTeX, PDF, Proyecto, Análisis de datos, Gráficas, Python, Pandas, WebScraping, Pandemia.
+\end{IEEEkeywords}
+
+
+\section{Marco teórico}
+\label{sec:introduction}
+
+\textbf{Pandemia actual Covid-19.}
+\\\
+
+\justify
+\\\
+
+COVID‑19 es la enfermedad infecciosa causada por el coronavirus que se ha descubierto más recientemente. Tanto este nuevo virus como la enfermedad que provoca eran desconocidos antes de que estallara el brote en Wuhan (China) en diciembre de 2019. Actualmente la COVID‑19 es una pandemia que afecta a muchos países de todo el mundo entre esos Colombia.
+\\\
+
+\justify
+\\\
+El ministro Fernando Ruiz destacó que la situación del contexto mundial sirve para entender la de Colombia. "En nuestro país tuvimos la misma situación, casi que cuatro capítulos diferentes. Un primer momento en Leticia, que no fue una epidemia colombiana sino brasilera -es decir la afectación de Leticia es más parecida a la de Brasil que a la de Colombia-, muy rápida, alta y un impacto altísimo", explicó.
+\\\
+
+\justify
+\\\
+Por lo pronto, se destaca la estrategia de Colombia y que ha sido referente a nivel mundial, buscando siempre aplanar la curva con la implicación de extender la epidemia un poco. "Hacerla más prolongada, de menor impacto, buscando una mayor inmunidad en la población, entonces digamos que la apuesta ha sido esa".
+\\\
+
+\justify
+\\\
+Estas medidas se tomaron con el conocimiento de lo que paso en Europa, con Italia y España principalmente. De ahí en adelante Colombia ha venido tomando decisiones que ya comprenden tres fases y aperturas graduales, que, si se comparan con las de otros países de la región, nuestro país lo ha hecho bien, ya que no ha habido la necesidad de retroceder. .~\cite{1}
+\\\
+
+\justify
+\\\
+El último informe del Ministerio de Salud y Protección Social, entregado el martes 29 de septiembre, confirmó 5.839 nuevos casos, 187 fallecidos más para un total de 25.828, mientras que 734.154 pacientes se han recuperado..~\cite{2}
+\\\
+
+\textbf{Python}
+\\\
+
+Python es un lenguaje de programación interpretado de tipado dinámico Se trata de un lenguaje de programación creado en 1991 por Guindo Van Rossum (1956, Holanda). Python es una opción interesante para realizar todo tipo de programas que se ejecuten en cualquier máquina. Está orientado a objetos y preparado para realizar cualquier tipo de programa, con este lenguaje podemos desarrollar software para app científicas, para comunicaciones de red, para app de escritorio con interfaz gráfica de usuario (GUI), para crear videojuegos, para smartphones, para inteligencia artificial, para automatización de tareas y por supuesto, para programación web..~\cite{3}
+\\\
+
+Para realizar este proyecto es necesario importar los siguientes paquetes:
+\\\
+
+\begin{itemize}
+\item import pandas as pd: Pandas es una librería de python destinada al análisis de datos, que proporciona unas estructuras de datos flexibles y que permiten trabajar con ellos de forma muy eficiente. Pandas ofrece las siguientes estructuras de datos. Es necesario instalarlo previamente, el comando es: pip install pandas.~\cite{4}
+\item import matplotlib.pyplot as plt: Matplotlib es probablemente el paquete de Python más utilizado para gráficos 2D. Proporciona una manera muy rápida de visualizar datos y figuras con calidad de publicación en varios formatos. Vamos a explorar Matplotlib en modo interactivo cubriendo los casos más comunes. Es necesario instalarlo previamente, el comando es pip install matplotlib..~\cite{5}
+\item import os: El módulo os de Python le permite a usted realizar operaciones dependientes del Sistema Operativo como crear una carpeta, listar contenidos de una carpeta, conocer acerca de un proceso, finalizar un proceso, etc. Este módulo tiene métodos para ver variables de entornos del Sistema Operativo. Es necesario instalarlo previamente, el comando es: pip install os-sys..~\cite{6}
+\item import requests: requests es una librería Python que facilita enormemente el trabajo con peticiones HTTP. Antes o después, en algún proyecto, es posible que tengas que hacer peticiones web, ya sea para consumir un API, extraer información de una página o enviar el contenido de un formulario de manera automatizada. Es necesario instalarlo previamente, el comando es: pip install requests.~\cite{7}
+\end{itemize}
+\\\
+
+\textbf{EXTRACIÓN DE DATOS}
+\\\
+
+Para lograr un uso adecuado de la información para los fines propuestos, primero tenemos que saber la forma de extraer datos, organizarlos, para luego poder trabajar con ellos.
+\\\
+
+ \textsl{CSV}: Un csv (comma-separated values) es un archivo de texto que almacena los datos en forma de columnas, separadas por coma y las filas se distinguen por saltos de línea.
+ \\\
+ 
+ Normalmente para importar o exportar de bases de datos de unas aplicaciones. Los programas de hojas de cálculo más habituales te dan la opción de grabar tu archivos en este formato, con la opción de  \textsl{“guardar como”}.~\cite{8}
+ \\\
+
+\textbf{WebScraping}
+\\\
+
+El web scraping consiste en navegar automáticamente una web y extraer de ella información. Esto puede ser muy útil para muchísimas cosas y beneficioso para casi cualquier negocio. A día de hoy, no creo que exista una sola empresa de éxito que no lo haga —o que no quiera hacerlo—. De hecho, la empresa reina del scrapeo es Google, que para que su buscador funcione así de bien tiene que estar constantemente scrapeando la red entera.
+\\\
+
+Al software programado para scrapear se le suele llamar bot, spider o crawler. Todo el mundo puede programar un crawler, ya que existen herramientas para ponerlo a punto que no requieren conocimientos de programación. Eso sí, estas herramientas nunca te van a dar toda la flexibilidad que tendrías si los desarrollaras en un lenguaje de programación. Más adelante veremos las tecnologías y herramientas más utilizadas para la creación de estos bichitos.~\cite{9}
+\\\
+
+\textbf{PANDAS}
+\\\
+
+Pandas es un paquete de Python que proporciona estructuras de datos similares a los dataframes de R. Pandas depende de Numpy, la librería que añade un potente tipo matricial a Python. Los principales tipos de datos que pueden representarse con pandas son:
+\\\
+
+\begin{itemize}
+\item Datos tabulares con columnas de tipo heterogéneo con etiquetas en columnas y filas.
+\item Series temporales.~\cite{10}
+\end{itemize}
+\\\
+
+\\\
+\section{Resultados}
+\label{sec:results}
+
+Para la realización de este proyecto se utilizó el siguiente código:
+\\\
+
+Primero se deben importar las librerías necesarias para la ejecución correcta del programa:
+\\\
+
+\\\
+
+\begin{lstlisting}
+import os
+import requests
+import pandas as pd
+import matplotlib.pyplot as plt
+
+\end{lstlisting}
+\\\
+
+Luego se utiliza el siguiente código para ingresar al sitio web en donde están los datos necesarios para el proyecto y así poder descargar de manera local el archivo CSV con todos los datos.
+\\\
+
+\begin{lstlisting}
+url="https://www.datos.gov.co/api/views/gt2j-8ykr/rows.csv?accessType=DOWNLOAD&bom=true&format=true"
+response = requests.get(url)
+with open(os.path.join("Archivo", "Data.csv"), "wb") as f:
+    f.write(response.content)
+
+\end{lstlisting}
+\\\
+
+Posteriormente se abre el archivo CSV local y se obtienen todos los datos. Además, se hace el arreglo de los nombres de las columnas y se establece que para la columna del "Sexo" de la persona debe ser "M" o "F".
+\\\
+\begin{lstlisting}
+data =pd.read_csv('Archivo/Data.csv')
+data.head()
+
+data.columns=['ID', 'Fecha de notificación', 'Código DIVIPOLA', 'Ciudad', 'Departamento', 'Atencion', 'Edad', 'Sexo', 'Tipo', 'Estado', 'País de procedencia', 'FIS', 'Fecha de muerte', 'Fecha diagnostico', 'Fecha recuperado', 'fecha reporte web', 'Tipo recuperación', 'Codigo departamento', 'Codigo pais', 'Pertenencia etnica', 'Nombre grupo etnico']
+
+d={'m':'M', 'f':'F','F':'F', 'M':'M'}
+data['Sexo']=data['Sexo'].apply(lambda x:d[x])
+\end{lstlisting}
+\\\
+Finalmente se realiza el código para crear las 4 gráficas de Barras y las 2 gráficas de Tortas, en donde se busca representar los datos sobre los Departamentos, Sexo, Recuperados, Fallecido y según su condición.
+\\\
+
+\begin{lstlisting}
+#GRAFICAS DE BARRAS
+fig1=plt.figure(figsize=(12,6))
+data.Departamento.value_counts().plot(kind='bar', alpha=0.5)
+plt.title('Número de Casos Totales según Departamento en Colombia')
+plt.show()
+
+fig=plt.figure(figsize=(12,6))
+data.Sexo.value_counts().plot(kind='bar', alpha=0.5)
+plt.title('Número de Casos según el Sexo')
+plt.show()
+
+fig2=plt.figure(figsize=(12,6))
+data.Atencion[data.Atencion == "Recuperado"].value_counts().plot(kind='bar', alpha=0.5)
+plt.title('Número de Casos de Recuperados en Colombia')
+plt.show()
+
+fig3=plt.figure(figsize=(12,6))
+data.Atencion[data.Atencion == "Fallecido"].value_counts().plot(kind='bar', alpha=0.5)
+plt.title('Número de Casos de Fallecidos en Colombia')
+plt.show()
+
+#GRAFICAS DE TORTAS
+
+fig1=plt.figure(figsize=(12,6))
+plt.pie(data.Sexo.value_counts(), autopct="%1.1f%%", shadow=True, radius= .9)
+plt.title('Porcentaje de Casos según el Sexo', bbox={"facecolor":"0.8","pad":5})
+plt.legend( labels= data.Sexo.value_counts().index.unique(), loc='upper right')
+plt.show()
+
+fig1=plt.figure(figsize=(12,6))
+plt.pie(data.Atencion.value_counts(), autopct="%1.1f%%", shadow=True, radius= .999)
+plt.title('Porcentaje de la situación de los contagiados en Colombia', bbox={"facecolor":"0.8","pad":5})
+plt.legend( labels=['%s, %1.1f%%' % (
+        l, (float(s) / data.ID.iloc[-1]) * 100) for l, s in zip(data.Atencion.value_counts().index.unique(), data.Atencion.value_counts())], loc='upper right')
+plt.show()
+\end{lstlisting}
+\\\
+
+Al ejecutar todo el código se obtienen las siguientes gráficas:
+\\\
+
+\begin{figure}[htbp]
+\centering
+\subfigure[\scriptsize Gráfica Número de Casos Totales según el Departamento en Colombia]{\includegraphics[width=200mm]{Figures/Figure_1.png}}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\subfigure[\scriptsize Gráfica Número de Casos según el Sexo en Colombia]{\includegraphics[width=200mm]{Figures/Figure_2.png}}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\subfigure[\scriptsize Gráfica Número de Casos Recuperados en Colombia]{\includegraphics[width=200mm]{Figures/Figure_3.png}}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\subfigure[\scriptsize Gráfica Número de Casos Fallecidos en Colombia]{\includegraphics[width=200mm]{Figures/Figure_4.png}}
+\caption{ Gráficas en estilo de Barras Verticales} \label{fig:lego}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\subfigure[\scriptsize Gráfica Porcentajes de Casos Según el Sexo ]{\includegraphics[width=200mm]{Figures/Figure_5.png}}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\subfigure[\scriptsize Gráfica Porcentajes de Casos Según su situación]{\includegraphics[width=200mm]{Figures/Figure_6.png}}
+\caption{ Gráficas en estilo de Torta} \label{fig:lego}
+\end{figure}
+\\\
+\\\
+\\\
+\\\
+\\\
+\\\
+\\\
+\\\
+\\\
+\\\
+\\\
+\\\
+\\\
+
+\\\
+\section{Conclusiones}
+\label{sec:conclusions}
+% Escriba su texto aquí
+Este año (2020) ha llegado con muchos problemas para la sociedad de todo el mundo, la pandemia ha afectado en todos los ámbitos a las personas, por ese motivo es tan importante esta información, gracias a esto, se han podido tener planes para poder solventar esta problemática de la mejor manera, acá es cuando notamos la gran importancia de la obtención, filtración, y representación de la información. Para poder lograr esto, encontramos la información necesaria que nos dio las herramientas para poder extraer los datos, a su vez este proyecto nos ayudó a entender como poder normalizar la información para hacer un uso eficaz y poder presentar información según las necesidades actuales, todo esto con el objetivo de ser eficientes a la hora de actuar frente a esta enfermedad.
+
+
+\nocite{*}
+\bibliographystyle{IEEEtran}
+\label{sec:biblio}
+% Descomente y modiffique el archivo biblio.bib para agregar bibliografía
+\bibliography{bib/biblio} 
+
+
+
+
+
+%\pagestyle{empty}
+\end{document}
+
+
